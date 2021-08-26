@@ -4,14 +4,19 @@ import AddUserForm from './components/userform/AddUserForm';
 import Error from './components/UI/Error'
 function App() {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    state: false,
+    ermessage: ''
+  });
   const addUser = (user) =>{
-    
     if(user.username.trim().length === 0){
-        setError(true);
+        setError((prevState) => {return {...prevState, state: true, ermessage : "user name cannot be epty"}});
         return;
     }
-    console.log(error);
+    if(user.age <= 0){
+      setError((prevState) => {return {...prevState, state: true, ermessage : "age should be > 0"}});
+        return;
+    }
     setUsers((prevState)=>{
          return [...prevState, user];
     })
@@ -25,7 +30,7 @@ function App() {
     <div>
         <AddUserForm addUser={addUser}/>
         <ListOfUsers users={users}/>
-        {error && <Error onClick={closeErrorModal}/>}
+        {error.state && <Error onClick={closeErrorModal} ermessage={error.ermessage}/>}
     </div>
   );
 }
