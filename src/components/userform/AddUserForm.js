@@ -18,7 +18,7 @@ export default function AddUserForm() {
             userName : enteredUserName,
             age: enteredAge
         }
-        console.log(newUser);
+        
         setEnteredUserName('');
         setEnteredAge('');
     }
