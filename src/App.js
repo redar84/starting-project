@@ -6,22 +6,26 @@ function App() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(false);
   const addUser = (user) =>{
-    console.log(user);
+    
     if(user.username.trim().length === 0){
         setError(true);
         return;
     }
+    console.log(error);
     setUsers((prevState)=>{
          return [...prevState, user];
     })
   }
-  console.log(error);
+  const closeErrorModal = ()=>{
+    setError(false);
+  }
+  
   return (
     
     <div>
         <AddUserForm addUser={addUser}/>
         <ListOfUsers users={users}/>
-        {error && <Error/>}
+        {error && <Error onClick={closeErrorModal}/>}
     </div>
   );
 }
