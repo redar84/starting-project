@@ -1,36 +1,65 @@
 import { useState } from 'react'
 import Button from '../UI/Button'
-import styles from '../userform/AddUserForm.module.css'
-export default function AddUserForm() {
-   
-    const[enteredUserName, setEnteredUserName] = useState('');
-    const[enteredAge, setEnteredAge] = useState('');
-    const handleUserNameInputChange = (e)=>{
+import Card from '../UI/Card';
+import Input from '../UI/Input'
+import styles from './AddUserForm.module.css'
+export default function AddUserForm(props) {
+
+    const [enteredUserName, setEnteredUserName] = useState('');
+    const [enteredAge, setEnteredAge] = useState('');
+    const [checkNumberInput, setCheckNumberInput] = useState(true);
+    const [checkStringInput, setCheckStringInput] = useState(true);
+    const handleUserNameInputChange = (e) => {
+        const t = e.target.value
+        // console.log(t);
+        // if(isNaN(e.target.value) && t === ''){
+        //     setCheckStringInput(false);
+        //     return;
+        // }
+        
         setEnteredUserName(e.target.value);
     }
-    const handleAgeInputChange =(e)=>{
+    const handleAgeInputChange = (e) => {
+
+        // if(isNaN(e.target.value)){
+        //      setCheckNumberInput(false);
+        //      return;
+        // }
         setEnteredAge(e.target.value);
     }
-    const submitForm = (e)=>{
+
+    // const CheckInputHandler = (input) => {
+    //     switch (input) {
+    //         case value:
+
+    //             break;
+
+    //         default:
+    //             break;
+    //     }
+    //}
+    const submitForm = (e) => {
         e.preventDefault();
-        console.log("H1value");
+        //console.log(enteredUserName);
         const newUser = {
-            userName : enteredUserName,
+            username: enteredUserName,
             age: enteredAge
         }
-        
+        //console.log(newUser);
+        props.addUser(newUser);
         setEnteredUserName('');
         setEnteredAge('');
     }
     return (
-        <>
-        <form onSubmit={submitForm} className={styles.input} >
-            <label>User Name</label>
-            <input type='text' name='username' value={enteredUserName} onChange={handleUserNameInputChange}/>
-            <label >Age (Years)</label>
-            <input type='text'  name='age' value={enteredAge} onChange={handleAgeInputChange} />
-            <Button/>
-        </form>
-      </>
+
+        <Card>
+            <form onSubmit={submitForm} className={styles.input} >
+                <Input type='text' label='User Name' value={enteredUserName} onChange={handleUserNameInputChange} />
+                <Input type='text' label='Age' value={enteredAge} onChange={handleAgeInputChange} />
+                <Button content='Add User' type='submit'/>
+            </form>
+        </Card>
+
+
     )
 }

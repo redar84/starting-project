@@ -1,5 +1,5 @@
 import styles from '../UI/Button.module.css'
-export default function Button(){
+export default function Button(props){
     return <button className={styles.button}
-           type='submit'>Add User</button>
+           type={props.type}>{props.content}</button>
 }
